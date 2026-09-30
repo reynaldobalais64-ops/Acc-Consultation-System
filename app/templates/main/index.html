@@ -1,0 +1,5 @@
+{% extends 'base.html' %}{% block title %}ACC Consultation System{% endblock %}
+{% block content %}
+<section class="hero"><div><p class="eyebrow">ABUYOG COMMUNITY COLLEGE</p><h1>Student Consultation, organized.</h1><p class="lead">A secure consultation management platform connecting students with authorized medical experts.</p><a class="btn btn-large" href="{{ url_for('auth.login') }}">Get Started</a></div><div class="hero-card"><div class="hero-icon">+</div><h3>Medical Support</h3><p>Submit requests, track status, and receive updates through one organized workflow.</p></div></section>
+<section><div class="section-heading"><h2>Announcements</h2></div><div class="grid">{% for item in announcements %}<article class="card"><h3>{{ item.title }}</h3><p>{{ item.content }}</p><small>{{ item.created_at.strftime('%B %d, %Y') }}</small></article>{% else %}<div class="empty">No announcements yet.</div>{% endfor %}</div></section>
+{% endblock %}

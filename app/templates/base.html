@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}ACC Consultation System{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<nav class="navbar">
+  <a class="brand" href="{{ url_for('main.index') }}"><span class="brand-mark">ACC</span><span>Consultation System</span></a>
+  <div class="nav-links">
+    {% if current_user.is_authenticated %}
+      <a href="{{ url_for('main.dashboard') }}">Dashboard</a>
+      {% if current_user.role == 'student' %}<a href="{{ url_for('student.new_consultation') }}">Request Consultation</a>{% endif %}
+      {% if current_user.role == 'super_admin' %}<a href="{{ url_for('admin.users') }}">Users</a><a href="{{ url_for('admin.announcements') }}">Announcements</a>{% endif %}
+      <span class="user-chip">{{ current_user.full_name }} · {{ current_user.role|replace('_',' ')|title }}</span>
+      <a class="btn btn-outline" href="{{ url_for('auth.logout') }}">Logout</a>
+    {% else %}
+      <a href="{{ url_for('auth.login') }}">Login</a><a class="btn" href="{{ url_for('auth.register') }}">Register</a>
+    {% endif %}
+  </div>
+</nav>
+<main class="container">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}<div class="flash-stack">{% for category, message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}</div>{% endif %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</main>
+<footer>Abuyog Community College · Consultation System</footer>
+</body>
+</html>
